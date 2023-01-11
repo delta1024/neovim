@@ -9,4 +9,8 @@ lsp.ensure_installed({
 	'rust_analyzer'
 })
 
+lsp.on_attach(function(client, buffr)
+    local opts = {buffer= buffr, remap = false}
+    vim.keymap.set("n", "<leader>F",  vim.cmd.LspZeroFormat, opts)
+end)
 lsp.setup()
