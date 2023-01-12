@@ -1,32 +1,28 @@
-local line_count = vim.api.nvim_buf_line_count(0)
-local lines = vim.api.nvim_buf_get_lines(0, 0, 1, false)
-local lcontent = next(lines)
+local api = vim.api
+local fn = vim.fn
 
-if line_count == 1 and lcontent == 1 or lcontent == nil then
+if api.nvim_buf_line_count(0) == 1 and fn.getline(1) == "" then
     print("Preform auto insert? y/n? ")
-    local opt = string.char(vim.fn.getchar())
+    local opt = string.char(fn.getchar())
     if opt ~= 'y' then
         return
     end
 
-    local cc = vim.fn.input("CC = ")
+    local cc = fn.input("CC = ")
     if cc == "" then
         cc = "gcc"
     end
 
-    local cflags = vim.fn.input("CFLAGS = ")
-    if cflags == "" then
-        cflags = "-Wall"
-    end
-    local bin = vim.fn.input("BIN = ")
+    local cflags = fn.input("CFLAGS = ")
+    local bin = fn.input("BIN = ")
 
-    lines = {
+    local lines = {
         "CC     = " .. cc,
-        "CFLAGS = " .. cflags,
+        "CFLAGS = -Wall " .. cflags,
         "",
     }
 
-    vim.api.nvim_buf_set_lines(0, -2, -1, false, lines)
+    api.nvim_buf_set_lines(0, -2, -1, false, lines)
 
     if bin ~= "" then
         lines = {
@@ -36,6 +32,6 @@ if line_count == 1 and lcontent == 1 or lcontent == nil then
             "\t${CC} ${CFLAGS} $^ -o $@",
         }
 
-        vim.api.nvim_buf_set_lines(0, -2, -1, false, lines)
+        api.nvim_buf_set_lines(0, -2, -1, false, lines)
     end
 end
