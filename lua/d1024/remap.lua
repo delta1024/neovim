@@ -1,16 +1,36 @@
+local map = vim.keymap
+local cmd = vim.cmd
+local function setLeader(key, func)
+    map.set("n", "<leader>" .. key, func)
+end
 
-vim.keymap.set("n", "<leader>fe", vim.cmd.Ex )
-vim.keymap.set("n", "<leader>gp",  function() vim.cmd.cd("~/Projects/cur/") end )
-vim.keymap.set("n", "<leader>gc",  function() vim.cmd.cd("~/.config/nvim/") end )
-vim.keymap.set("n", "<leader>gw",  function() vim.cmd.cd("~/.config/herbstluftwm/") end )
+setLeader("fe", cmd.Ex)
+setLeader("gp", function()
+    cmd.cd("~/Projects/cur/")
+end)
+setLeader("gn", function()
+    cmd.cd("~/.config/nvim/")
+end)
+setLeader("gc", function()
+    cmd.cd("~/.config/")
+end)
+setLeader("gw", function()
+    cmd.cd("~/.config/herbstluftwm/")
+end)
+setLeader("t", function()
+    cmd("silent !kitty " .. cmd.pwd() .. "&")
+end)
+setLeader("D", cmd.Dashboard)
 
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 
-vim.keymap.set("n", "J", "mzJ'z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+map.set("v", "J", ":m '>+1<CR>gv=gv")
+map.set("v", "K", ":m '<-2<CR>gv=gv")
+
+
+map.set("n", "J", "mzJ'z")
+map.set("n", "<C-d>", "<C-d>zz")
+map.set("n", "<C-u>", "<C-u>zz")
+map.set("n", "n", "nzzzv")
+map.set("n", "N", "Nzzzv")
